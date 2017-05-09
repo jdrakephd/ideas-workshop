@@ -1,0 +1,25 @@
+---
+title: "Programming"
+author: "John M. Drake & Andrew W. Park"
+date: ""
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE)
+```
+
+## Introduction
+
+## Scripts
+
+**Exercise. Write a script to load the ??? data and generate a plot with ggplot.**
+
+## Functions
+
+**Exercise. Write a function to ??? and incorporate it into your script.**
+
+
+## Using help
+
+**Exercise. Use the help for function `lm`.**

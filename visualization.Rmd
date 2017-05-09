@@ -1,0 +1,154 @@
+---
+title: "Data visualization"
+author: "John M. Drake & Andrew W. Park"
+date: ""
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE)
+```
+
+## Introduction
+
+This is the first in a series of five exercises that constitute *Training Module 1: Introduction to Scientific Programming*, taught through the IDEAS PhD program at the University of Georgia Odum School of Ecology in conjunction with the Center for the Ecology of Infectious Diseases. This module is based on the premise that computer coding is a basic scientific skill. This module introduces the principles and practice of scientific computing with special emphasis on analysis of infectious disease data. Programming will be done in R. Students will be taught how to create reproducible research documents using R and R Markdown and to use git/Github for collaborative and individual projects. An introduction to scientific programming will teach basic operations and classes of base R, installation and use of R packages, data import and transformation, flow control with loops, writing functions, calculating summary statistics, data visualization, and basic mapping. 
+
+Recommended reading for this module is the book *R for Data Science* by Hadley Wickham and Garret Grolemund (O'Reilly Media, 2017).
+
+This exercise seeks to introduce the student to basic tasks and operations required to visualize data in R using `ggplot2`. *Data visualization* is a key component of *exploratory data analysis*. `ggplot2` implements Leland Wilkinson's idea that there is a "grammar of graphics" -- that is an organizational scheme based on the semantic replationships among different graphical elements. Data visualization theory, practice, and exploratory data analysis are not covered systematically, but rather by example, with the expectation that students will develop further skills by extending the provided examples.
+
+## Case study
+
+As a running example in this exercise, we will study a data set on the spread of Middle East Respiratory Syndrome Corona Virus (MERS-CoV) compiled and made available by Andrew Rambaut on his Github site (https://github.com/rambaut/MERS-Cases/blob/gh-pages/data/cases.csv). Github is a development platform used by developers to host a wide range of coding projects and is very popular with data scientists and others interested in open science. We will return to Github on the final day of the module. For now, we will just use it to access Rambaut's data. MERS-CoV is a positive-sense single-stranded Betacoronavirus. Its closest relatives are the SARS coronavirus, common-cold coronavirus, and other human betacoronaviruses. MERS-CoV first emerged in Suudi Arabia in 2012. It causes a severe respiratory illness Transmission to humans may be direct (person-to-person), particularly in hospitals, or from contact with infected animals. Exposure to camels is associated with many cases, although bats, particularly the Egyptian Tomb bat (*Taphozous perforatus*), are suspected to be the maintenance reservoir. The case fatality rate is around 40%.
+
+## Getting the data into R
+
+To load the MERS data into an R session, do the following:
+
+1. Create a working directory called `mers`
+2. Download the file `cases.csv` and move it to `mers`
+3. Open a session of R Studio
+4. Set the working directory by typing `setwd('~/./mers)` where `.` is the file path to your working directory. (Alternatively, you can navigate by using the `Session` drop down menu and selecting `Set Working Directory`.)
+5. Create an R *dataframe* by typing `data <- read.csv('cases.csv')` as shown below.
+
+```{r load-data}
+mers <- read.csv('cases.csv')
+```
+## Formatting some dates
+
+We can inspect the data using the base R function `head`. We see that some variables, such as `onset` and `hospitalized` are dates, but formatted as a `factor`.
+
+```{r}
+head(mers)
+class(mers$onset)
+```
+These dates can be reformatted using the `lubridate` package. Here we create new variables using the `Date` class. But, first we correct a few errors.
+
+```{r}
+mers$hospitalized[890] <- c('2015-02-20')
+mers <- mers[-471,]
+
+library(lubridate)
+mers$onset2 <- ymd(mers$onset)
+mers$hospitalized2 <- ymd(mers$hospitalized)
+class(mers$onset2)
+```
+
+We may also find it useful to have a simple numerical value for the days elapsed since the start of the epidemic.  We use the following code to search for the earliest onset date.
+
+```{r}
+day0 <- min(na.omit(mers$onset2))
+```
+
+**Question. Why do we use the function `na.omit`? What happens if we neglect this command?**
+
+Now we can create a new, numeric value for the "epidemic day" for each case.
+
+```{r}
+mers$epi.day <- as.numeric(mers$onset2 - day0)
+```
+
+**Question. What purpose does the command `as.numeric` serve?**
+
+## Making a plot
+
+Next, we load `ggplot2`.
+
+```{r ggplot2}
+library(ggplot2)
+```
+
+We can explore some of the MERS data using the function `ggplot`. One plot we might wish to produce is the *epidemic curve* which is basically a bar plot.  An empty plot can be produced using the command `ggplot(data=mers)`. The epidemic curve is then produced by adding a bar plot using the geom function `geom_bar`. The last line of our code adds some labels.
+
+```{r}
+ggplot(data=mers) + 
+  geom_bar(mapping=aes(x=epi.day)) +
+  labs(x='Epidemic day', y='Case count', title='Global count of MERS cases by date of symptom onset',
+       caption="Data from: https://github.com/rambaut/MERS-Cases/blob/gh-pages/data/cases.csv")
+```
+
+**Exercise. To produce this plot, type all the commands up to this point *exactly* as they appear. Particularly, note that as we "build" the plot in the last code snippet, we end each line with the addition syhmbol "+". What happens if we don't use this convention?**
+
+Of course, all these cases are distributed among a number of different countries. We can modify the plot to show this using the using the aesthetic `fill`.
+
+```{r}
+ggplot(data=mers) + 
+  geom_bar(mapping=aes(x=epi.day, fill=country)) +
+  labs(x='Epidemic day', y='Case count', title='Global count of MERS cases by date of symptom onset',
+       caption="Data from: https://github.com/rambaut/MERS-Cases/blob/gh-pages/data/cases.csv")
+```
+
+In this example, we've shown how to make a basic bar plot with `ggplot` and the geom function `geom_bar`. Our mapping of data objects to plot objects was performed using `aes` and we used the `fill` aesthetic to examing the distribution of cases among countries. There are lots of variations on the bar plot that we can examine. For instance, we can modify the `position`, which is another argument to `geom_bar`.
+
+**Exercise. Modify the epidemic curve using the argument `position=fill`. What does this plot show?**
+
+**Exercise. Another way to modify a bar plot is to change the coordinates. This can be done by "adding" `coord_flip()` and `coord_polar()` to the plot. Modify the epidemic curve using the argument `position=fill`. What does this plot show?**
+
+## Univariate plots
+
+Of course, there are lots of plot types other than bar plots. A quick reference for some of the more common plot types is the *ggplot2 Cheat Sheet*, available online at https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf. To explore some of these plot types, we will first construct a continuous quantity that is often of interest, the *infectious period*. From the standpoint of disease transmission, the infectious period is best defined as the duration of infectiousness for a patient. From an epidemiological point of view, this may often be approximated as the time between the onset of symptoms and the time of death, hospitalization, or isolation. Here we caculate the infectious period and plot a histogram.
+
+```{r}
+mers$infectious.period <- mers$hospitalized2-mers$onset2    # calculate "raw" infectious period
+class(mers$infectious.period)           # these data are class "difftime"
+mers$infectious.period <- as.numeric(mers$infectious.period, units = "days") # convert to days
+ggplot(data=mers) +
+  geom_histogram(aes(x=infectious.period)) + 
+  labs(x='Infectious period', y='Frequency', title='Distribution of calculated MERS infectious period',
+       caption="Data from: https://github.com/rambaut/MERS-Cases/blob/gh-pages/data/cases.csv")
+```
+
+**Wait a minute! What is a negative infectious period?**
+
+In the case of MERS, this epidemiological definition of infectious period is misleading, because in some cases the main source of transmission has been nosocomial (infections in a health care setting). This appears in our data as a negative time interval between onset and hospitalization. Perhaps we would wish to calculate a *new* value, which is the calculated infectious period in the case where it is positive and zero otherwise. To do this, we rely on the handy function `ifelse`.
+
+```{r}
+mers$infectious.period2 <- ifelse(mers$infectious.period<0,0,mers$infectious.period)
+ggplot(data=mers) +
+  geom_histogram(aes(x=infectious.period2)) + 
+  labs(x='Infectious period', y='Frequency',
+       title='Distribution of calculated MERS infectious period (positive values only)', caption="Data from: https://github.com/rambaut/MERS-Cases/blob/gh-pages/data/cases.csv")
+```
+
+**Exercise. Investigate the frequency of hospital-acquired infections of MERS**
+
+There are lots of different plot types that one can use to inspect continuously valued or integer-valued data like these. For instance, the density plot 
+
+```{r}
+ggplot(data=mers) + 
+  geom_density(mapping=aes(x=infectious.period2)) + 
+  labs(x='Infectious period', y='Frequency',
+       title='Probability density for MERS infectious period (positive values only)', caption="Data from: https://github.com/rambaut/MERS-Cases/blob/gh-pages/data/cases.csv")
+
+```
+
+Ot the dot plot 
+
+```{r}
+ggplot(data=mers) + 
+  geom_area(stat='bin', mapping=aes(x=infectious.period2)) +
+  labs(x='Infectious period', y='Frequency',
+       title='Area plot for MERS infectious period (positive values only)', caption="Data from: https://github.com/rambaut/MERS-Cases/blob/gh-pages/data/cases.csv")
+```
+
+**Exercise. Use the infectious period data calculated in `mers$infectious.period2` to experiment with other univariate plot types like `geom_dotplot` and `geom_bar`**
