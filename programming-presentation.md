@@ -5,11 +5,6 @@ date:
 autosize: true
 
 
-Data
-========================================================
-
-Ebola or WNV mortality
-
 Key commands 1
 ========================================================
 
@@ -196,7 +191,7 @@ R programs are called *scripts*
 Prototypical script
 
 1. Header (commented declaration of *function*, *author*, *contact*, *date*, and *change log*)
-2. Load libraries
+2. Load packages
 3. Declare functions
 4. Load data
 5. Analysis
