@@ -142,7 +142,7 @@ ggplot(data=mers) +
 
 ```
 
-Ot the dot plot 
+Ot the dot plot TEST
 
 ```{r}
 ggplot(data=mers) + 
