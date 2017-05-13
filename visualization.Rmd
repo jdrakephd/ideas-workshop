@@ -142,7 +142,7 @@ ggplot(data=mers) +
 
 ```
 
-Or the dot plot TEST
+Or the dot plot
 
 ```{r}
 ggplot(data=mers) + 
@@ -153,5 +153,23 @@ ggplot(data=mers) +
 
 **Exercise. Use the infectious period data calculated in `mers$infectious.period2` to experiment with other univariate plot types like `geom_dotplot` and `geom_bar`**
 
+## Bivariate plots
 
-TEST
+The preceding plots have all concerned the distribution of one variable. Of course, the objective of data analysis is usually to determine the *relationships* among variables. In this section we study some plots for two variables.
+
+We can continue our study by focusing on the infectious period. Epidemiological theory holds that an outbreak will continue to grow in size as long as the *effective reproduction number* is greater than one. Roughly, the effective reproduction number is the ration of the number of transmission events per unit time to the infectious period. The number of transmission events, in turn, is given by the product of: (1) the per encounter probability of transmissibility, (2) the contact rate in the population, and (3) the fraction of the population that is susceptible to the disease.
+
+This means outbreaks can end two ways. First, the outbreak might "burn out" by infecting such a large fraction of the susceptible population that the effective reproduction number falls below one. Second, outbreaks are often curtailed before this point by isolating infected individuals, effectively by reducing the infectious period. Thus, we might be interested in understanding how the infectious period changes over time (i.e., the effectiveness of isolation).
+
+
+
+
+## Faceting
+
+## More
+
+The `ggplot2` package provides over 30 geoms and extension packages (e.g. `ggplot2-exts`) provide many others.
+
+**Exercise. Download and install the ggplot extension. Modify your plot with one or more new geoms.* 
+
+SOMETHING WITH NETWORKS?
