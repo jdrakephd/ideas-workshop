@@ -152,3 +152,6 @@ ggplot(data=mers) +
 ```
 
 **Exercise. Use the infectious period data calculated in `mers$infectious.period2` to experiment with other univariate plot types like `geom_dotplot` and `geom_bar`**
+
+
+TEST
