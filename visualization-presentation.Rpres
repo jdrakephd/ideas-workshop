@@ -28,7 +28,7 @@ R/RStudio
 
 ***
 
-<www.r-project.org/>
+<http://www.r-project.org/>
 
 
 Why look at data?
@@ -50,7 +50,9 @@ How to look at data?
 A grammar of graphics
 ========================================================
 
-Grammar - The fundamental principles or rules of an art or science (OED, quoted in Wickham 2010)
+Grammar - The fundamental principles or rules of an art or science 
+
+- OED, quoted in Wickham (2010)
 
 ***
 
@@ -87,6 +89,12 @@ A graphing template
 
 `ggplot(data=<DATA>) + <GEOM_FUNCTION>(mapping=aes(<MAPPINGS>))`
 
+```{r, fig.width=6, fig.height=4}
+library(ggplot2)
+ggplot(data=diamonds) + 
+  geom_bar(mapping=aes(x=cut, fill=clarity))
+```
+
 
 Aesthetics
 ========================================================
@@ -96,6 +104,13 @@ An *aesthetic* is a visual property attached to some data in a plot, e.g.
 * Size
 * Shape
 * Color
+
+```{r, fig.width=6, fig.height=4, echo=FALSE}
+library(ggplot2)
+ggplot(data=diamonds) + 
+  geom_bar(mapping=aes(x=cut, fill=clarity))
+```
+
 
 Exercises
 ========================================================
