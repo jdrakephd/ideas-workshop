@@ -214,3 +214,5 @@ epi.curve <- ggplot(data=mers) +
        caption="Data from: https://github.com/rambaut/MERS-Cases/blob/gh-pages/data/cases.csv")
 ggplotly(epi.curve)
 ```
+
+**Exercise. Make one of your case fatality plots an interactive graphic.**
