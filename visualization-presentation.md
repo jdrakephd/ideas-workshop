@@ -5,7 +5,7 @@ date:
 autosize: true
 
 
-Why this workshop
+Why this workshop?
 ========================================================
 
 "Coding is a basic science skill"
@@ -15,8 +15,8 @@ Overview
 ========================================================
 
 - Data visualization
-- Data wrangling
 - Writing computer programs
+- Data wrangling
 - Modeling
 - Project management
 
@@ -97,10 +97,15 @@ An *aesthetic* is a visual property attached to some data in a plot, e.g.
 * Shape
 * Color
 
-Slide With Plot
+Exercises
 ========================================================
 
-![plot of chunk unnamed-chunk-1](visualization-presentation-figure/unnamed-chunk-1-1.png)
+**Notes**
+
+- This workshop addresses visualization, programming, and data wrangling separately, but they're inevitably intertwined. You will have to do some data wranging (e.g. with the package `lubridate`) and minor programming (e.g. assignment operation) to complete this exercise. This may be frustrating. **Stick with it -- it's worth it!**
+- A good strategy: Find an example -> Modify -> Compute. Repeat.
+- Google is very helpful (especially **Stack Overflow** and **Cross Validated**)
+
 
 References
 ========================================================
