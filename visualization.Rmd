@@ -1,8 +1,10 @@
 ---
 title: "Data visualization"
 author: "John M. Drake & Andrew W. Park"
-date: ""
-output: pdf_document
+date: ''
+output:
+  html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -139,10 +141,9 @@ ggplot(data=mers) +
   geom_density(mapping=aes(x=infectious.period2)) + 
   labs(x='Infectious period', y='Frequency',
        title='Probability density for MERS infectious period (positive values only)', caption="Data from: https://github.com/rambaut/MERS-Cases/blob/gh-pages/data/cases.csv")
-
 ```
 
-Or the dot plot
+Or the area plot
 
 ```{r}
 ggplot(data=mers) + 
@@ -151,7 +152,7 @@ ggplot(data=mers) +
        title='Area plot for MERS infectious period (positive values only)', caption="Data from: https://github.com/rambaut/MERS-Cases/blob/gh-pages/data/cases.csv")
 ```
 
-**Exercise. Use the infectious period data calculated in `mers$infectious.period2` to experiment with other univariate plot types like `geom_dotplot` and `geom_bar`**
+**Exercise. Use the infectious period data calculated in `mers$infectious.period2` to experiment with other univariate plot types like `geom_dotplot` and `geom_bar`.**
 
 ## Bivariate plots
 
@@ -161,15 +162,55 @@ We can continue our study by focusing on the infectious period. Epidemiological 
 
 This means outbreaks can end two ways. First, the outbreak might "burn out" by infecting such a large fraction of the susceptible population that the effective reproduction number falls below one. Second, outbreaks are often curtailed before this point by isolating infected individuals, effectively by reducing the infectious period. Thus, we might be interested in understanding how the infectious period changes over time (i.e., the effectiveness of isolation).
 
+**Exercise. Use our corrected infectious period variable (`infectious.period2`) to study the change in the inectious period over the course of the MERS epidemic.**
 
+**Exercise. In data from many outbreaks it can be seen that there is a kind of *societal learning*. When the infection first emerges it is not quickly recognized, public health resources have not been mobilized, it is not known what symptoms are diagnostic, how to treat, etc. But, quickly, this information is collected and the utbreak is contained. Is there evidence of this kind of societal learning in the mers data. Add a curve fit using `geom_smooth` to explore this question. Hint: I solved using the `loess` method because the default smoother (gam) failed.**
 
+**Exercise. Plot `infectious.period2` against time, as before, but this time add a separate smooth fit for each country.**
 
 ## Faceting
+
+Ordinary plots are great when we want to compare two variables. Furthermore, we can study three or more variables by varying other features of the aesthetics (i.e., color). But, as we saw in the last exercise, when we begin adding information to our plot it can quickly get cluttered. There are numerous ways to add information from additional variables, for instance 3-d plots and contour plots. Another way is to create *multi-panel* plots. In ggplot2, this is called *faceting*. Faceting allows one to look at subsets of a data set simultaneously. In ggplot, this is accomplished using the functions `facet_wrap()` and `facet_grid`. The behavior of these functions is shown below. Notice how the second example uses `subset` to exclude countries that didn't report many cases and unusual codings for gender (e.g. `?M`).
+
+```{r}
+ggplot(data=mers, mapping=aes(x=epi.day, y=infectious.period2)) + 
+  geom_point(mapping = aes(color=country)) +
+  facet_wrap(~ country) + 
+  scale_y_continuous(limits = c(0, 50)) +
+   labs(x='Epidemic day', y='Infectious period',
+       title='MERS infectious period (positive values only) over time', caption="Data from: https://github.com/rambaut/MERS-Cases/blob/gh-pages/data/cases.csv")
+```
+
+```{r}
+ggplot(data=subset(mers, gender %in% c('M', 'F') & country %in% c('KSA', 'Oman', 'Iran', 'Jordan', 'Qatar', 'South Korea','UAE')), mapping=aes(x=epi.day, y=infectious.period2)) + 
+  geom_point(mapping = aes(color=country)) +
+  facet_grid(gender ~ country) + 
+  scale_y_continuous(limits = c(0, 50)) +
+   labs(x='Epidemic day', y='Infectious period',
+       title='MERS infectious period by gender and country', caption="Data from: https://github.com/rambaut/MERS-Cases/blob/gh-pages/data/cases.csv")
+```
+
+**Exercise. Study variation in the *case fatality rate* (the fraction of cases that end in death) over time and across countries.**
 
 ## More
 
 The `ggplot2` package provides over 30 geoms and extension packages (e.g. `ggplot2-exts`) provide many others.
 
-**Exercise. Download and install the ggplot extension. Modify your plot with one or more new geoms.* 
+**Exercise. Download and install the ggplot extension. Modify your plot with one or more new geoms.**
 
-SOMETHING WITH NETWORKS?
+*Interactive graphics* are graphics rendered in HTML that allow the viewer to extract more information or modify the information presented using selection, hovering, etc. The `plotly` package allows the graphics produced using the vast majority of `ggplot` functions to be used interactively using the following sequence:
+
+1. Create a ggplot
+2. Assign this plot to a variable
+3. call `ggplotly` from te `plotly` package using the ggplot as the argument.
+
+The following code demonstrates using the very first graph produced in this exercise, an epidemic curve created using the barplot geom.
+
+```{r}
+library(plotly)
+epi.curve <- ggplot(data=mers) + 
+  geom_bar(mapping=aes(x=epi.day)) +
+  labs(x='Epidemic day', y='Case count', title='Global count of MERS cases by date of symptom onset',
+       caption="Data from: https://github.com/rambaut/MERS-Cases/blob/gh-pages/data/cases.csv")
+ggplotly(epi.curve)
+```
