@@ -3,8 +3,8 @@ title: "Data visualization"
 author: "John M. Drake & Andrew W. Park"
 date: ''
 output:
-  html_document: default
   pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -206,7 +206,7 @@ The `ggplot2` package provides over 30 geoms and extension packages (e.g. `ggplo
 
 The following code demonstrates using the very first graph produced in this exercise, an epidemic curve created using the barplot geom.
 
-```{r}
+```{r, eval=FALSE}
 library(plotly)
 epi.curve <- ggplot(data=mers) + 
   geom_bar(mapping=aes(x=epi.day)) +
