@@ -8,7 +8,7 @@ autosize: true
 Key commands 1
 ========================================================
 
-Assignment
+**Assignment**
 
 
 ```r
@@ -24,7 +24,7 @@ print(a)
 Key commands 2
 ========================================================
 
-Arithmetic operations
+**Arithmetic operations**
 
 
 ```r
@@ -42,6 +42,12 @@ Arithmetic operations
 ```
 [1] 2
 ```
+
+Key commands 2
+========================================================
+
+**Arithmetic operations (continued)**
+
 
 ```r
 4*6
@@ -62,7 +68,7 @@ Arithmetic operations
 Key commands 3
 ========================================================
 
-Advanced arithmetic
+**Advanced arithmetic**
 
 
 ```r
@@ -80,6 +86,12 @@ exp(2)
 ```
 [1] 7.389056
 ```
+
+Key commands 3
+========================================================
+
+**Advanced arithmetic (continued)**
+
 
 ```r
 log(10)
@@ -105,10 +117,11 @@ log(10, base=10)
 [1] 1
 ```
 
+
 Key commands 4
 ========================================================
 
-Modular arithmetic
+**Modular arithmetic**
 
 
 ```r
@@ -130,7 +143,7 @@ Modular arithmetic
 Key commands 5
 ========================================================
 
-Logic
+**Logic**
 
 
 ```r
@@ -149,6 +162,23 @@ Logic
 [1] TRUE
 ```
 
+Note that TRUE/FALSE can be treated like 1/0
+
+
+```r
+(6 == 6) * 3
+```
+
+```
+[1] 3
+```
+
+Key commands 5
+========================================================
+
+**Logic**
+
+
 ```r
 4 != 6
 ```
@@ -165,10 +195,11 @@ Logic
 [1] FALSE
 ```
 
+
 Key commands 5
 ========================================================
 
-Logical operators commonly used in R
+**Logical operators commonly used in R**
 
 | Syntax        | Meaning           | 
 | :-----------: |:-------------:| 
@@ -180,17 +211,27 @@ Logical operators commonly used in R
 | `x <= y` | x is less than or equal to  y    | 
 
 
-Scripts
+Scripting
 ========================================================
 
 R programs are called *scripts*
+
 - Written in editor
 - Handy tools like *syntax highlighting* and *error checking*
 - Use # to indicate *comments*
 
-Prototypical script
 
-1. Header (commented declaration of *function*, *author*, *contact*, *date*, and *change log*)
+```r
+a <- 3 # This code assigns "3" to the variable "a" and includes a comment
+```
+
+
+Scripting
+========================================================
+
+**Prototypical script**
+
+1. Header (comments about *function*, *author*, *contact*, *date*, and *change log*)
 2. Load packages
 3. Declare functions
 4. Load data
@@ -209,6 +250,11 @@ Advantages of using functions
 - *Interpretability*: A function can be given an *evocative name* that makes the code easier to understand
 - *Simplicity*: As requirements change updates are made in only one place
 - *Robustness*: Reduces the frequency of mistakes
+
+Functions
+========================================================
+
+**A function is a *program-within-a-program* to automate a *common task*.**
 
 Components of a function
 
@@ -243,16 +289,6 @@ mean(x)
 [1] 5
 ```
 
-Also
-
-```r
-z <- c(1,3,5,7)
-mean(z)
-```
-
-```
-[1] 4
-```
 
 Checking values 1
 ========================================================
@@ -293,6 +329,11 @@ wt_mean(x,w)
 [1] 6.8
 ```
 
+How does this even work?
+
+Checking values 2
+========================================================
+
 A more robust function for calculating the weighted mean
 
 ```r
@@ -317,6 +358,7 @@ Google R style guide
 We recommend Google R style for scripts and functions  
 <https://google.github.io/styleguide/Rguide.xml>
 
+<font size=5px>
 
 
 ```r
@@ -341,11 +383,19 @@ wt_mean2 <- function(x,w){
 }
 ```
 
+</font>
 
 Pipes
 ========================================================
 
 The pipe (`%>%`), f*rom the `magrittr` package, is a tool for clearly expressing a sequence of multiple operations
+
+![alt text](logo.png)
+
+
+Pipes
+========================================================
+
 
 **A clunky analysis**
 
@@ -356,12 +406,10 @@ y <- matrix(x, ncol=2)
 plot(y, xlab='Variable 1', ylab='Variable 2')
 ```
 
-![plot of chunk unnamed-chunk-15](programming-presentation-figure/unnamed-chunk-15-1.png)
+![plot of chunk unnamed-chunk-19](programming-presentation-figure/unnamed-chunk-19-1.png)
 
 Pipes
 ========================================================
-
-The pipe (`%>%`), f*rom the `magrittr` package, is a tool for clearly expressing a sequence of multiple operations
 
 **A cleaner version with pipes**
 
@@ -373,7 +421,27 @@ rnorm(100) %>%
   plot(xlab='Variable 1', ylab='Variable 2')
 ```
 
-![plot of chunk unnamed-chunk-16](programming-presentation-figure/unnamed-chunk-16-1.png)
+![plot of chunk unnamed-chunk-20](programming-presentation-figure/unnamed-chunk-20-1.png)
+
+
+Flow of control
+========================================================
+
+**Conditional execution**
+- `if`
+- `else`
+- `ifelse`
+
+***
+
+**Loops**
+- `for`
+- `while`
+- `repeat`
+
+**Flow in loops**
+- `break`
+- `next`
 
 Conditional execution: Three examples
 ========================================================
@@ -434,10 +502,49 @@ ifelse(a==2, c <- b, c <- a+b)
 [1] 3
 ```
 
-Flow control
+
+
+Loops
 ========================================================
 
-TBD
+**Simple iteration**
+
+
+```r
+j <- 0
+for(i in 1:5){
+  j[i+1] <- i*2
+  print(j)
+}
+```
+
+```
+[1] 0 2
+[1] 0 2 4
+[1] 0 2 4 6
+[1] 0 2 4 6 8
+[1]  0  2  4  6  8 10
+```
+
+Looping over 
+========================================================
+
+**Any vector**
+
+
+```r
+for(prefix in c('b','c','m','r')){
+  word <- paste(prefix, 'at', sep='')
+  print(word)
+}
+```
+
+```
+[1] "bat"
+[1] "cat"
+[1] "mat"
+[1] "rat"
+```
 
 
 R Help
