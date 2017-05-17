@@ -27,7 +27,7 @@ At this point, one might wonder how to keep track of all these files, datasets, 
 
 ## Version control, Git, and Github
 
-R projects are especially useful for *version control*. Version control is software for managing changes to code, data, and the other files associated with a project. Version control facilitates undoing revisions to an arbitrary point in the history of a file and the clean synchronization of changes contributed by multiple users. *Git* is a population version control system that works well with R/RStudio through the Github repository service.
+R projects are especially useful for *version control*. Version control is software for managing changes to code, data, and the other files associated with a project. Version control facilitates undoing revisions to an arbitrary point in the history of a file and the clean synchronization of changes contributed by multiple users. *Git* is a popular version control system that works well with R/RStudio through the Github repository service.
 
 Create a Github account:
 
