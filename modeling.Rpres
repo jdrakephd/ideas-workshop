@@ -1,0 +1,90 @@
+modeling
+========================================================
+author: Andrew W. Park & John M. Drake
+date: 
+autosize: true
+
+========================================================
+```{r}
+library(GGally); library(magrittr); data(cars) 
+cars %>% ggpairs(columns=c("speed","dist"))
+```
+
+
+========================================================
+```{r}
+library(dplyr); cars %<>% mutate(log10speed=log10(speed))
+cars %>% ggpairs(columns=c("log10speed","dist"))
+```
+
+Reproducibility and subsampling
+========================================================
+```{r}
+x <- tibble(rnorm(10)) %>% print
+```
+
+Reproducibility and subsampling
+========================================================
+```{r}
+x %>% sample_n(5)
+```
+
+Reproducibility and subsampling
+========================================================
+```{r}
+x %>% sample_n(5)
+```
+
+Reproducibility and subsampling
+========================================================
+```{r}
+set.seed(123); x %>% sample_n(5) #1st call
+```
+
+Reproducibility and subsampling
+========================================================
+```{r}
+set.seed(123); x %>% sample_n(5) #2nd call
+```
+
+Linear modeling
+========================================================
+```{r}
+library(ggplot2)
+ggplot(cars)+geom_point(aes(speed,dist))+
+  geom_smooth(aes(speed,dist),method="lm")
+```
+
+
+Linear modeling
+========================================================
+```{r}
+summary(lm(speed~dist,data=cars))
+```
+
+
+Lists
+========================================================
+```{r}
+
+y<-list(3.14,"eggs",lm(speed~dist,data=cars)) %>% print
+
+```
+
+
+Correlation coefficients
+========================================================
+```{r,message=F,warning=F}
+cor.test(cars$speed,cars$dist,method="spearman")
+```
+
+
+
+modelr
+========================================================
+
+* create models from data
+* store modeling information with data
+* group and nest data for analysis
+* un-nest for visualization
+
