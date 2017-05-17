@@ -52,9 +52,10 @@ The PRISM data for total rainfall and average temperature, is available for over
 *Task 1: Read in all three csv files as tibble data frames. For consistency with these notes, we'll assign their dataframes to be called "ld", "pop" and "prism", resectively.*
 
 ```{r, message=F, echo=T}
-ld<-read_csv("./data/CDC/ld-case-counts-by-county-00-15.csv")
-pop<-read_csv("./data/CENSUS/county_population.csv")
-load("get_PRISM.Rda")
+# SOLUTION
+ld<-read_csv("lyme.csv")
+pop<-read_csv("pop.csv")
+prism<-read_csv("climate.csv")
 ```
 
 ## Converting data to the `tidy data` format
