@@ -1,6 +1,6 @@
 ---
 title: "Data visualization"
-author: "John M. Drake & Ana I. Bento"
+author: "John M. Drake & Andrew W. Park"
 date: ''
 output:
   pdf_document: default
@@ -11,15 +11,7 @@ output:
 knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE)
 ```
 
-## Learning outcomes
 
-1. Add outcome
-
-2. Add outcome
-
-3. Add outcome
-
-4. Add outcome
 
 ## Introduction
 
