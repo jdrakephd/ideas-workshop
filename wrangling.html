@@ -784,7 +784,7 @@ hljs.initHighlightingOnLoad();
   <div class="slides">
 
 <section data-state="section" data-transition="linear" data-transition-speed="default">
-<h1>wrangling</h1><p>Andrew W. Park &amp; John M. Drake</p>
+<h1>wrangling</h1><p>Ana I. Bento &amp; John M. Drake</p>
 
 <div class="slideContent" >
 
@@ -961,11 +961,11 @@ pocket_money &lt;- tibble(name=c(&quot;Jack&quot;,&quot;Jill&quot;),
                        savings=c(10,15),chores=c(5,2)) %&gt;% print
 </code></pre>
 
-<pre><code># A tibble: 2 × 3
-   name savings chores
+<pre><code># A tibble: 2 x 3
+  name  savings chores
   &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt;
-1  Jack      10      5
-2  Jill      15      2
+1 Jack      10.     5.
+2 Jill      15.     2.
 </code></pre>
 
 </div>
@@ -981,11 +981,11 @@ pocket_money %&gt;% rowwise %&gt;% mutate(total=get_sum(savings,chores)) %&gt;% 
 <pre><code>Source: local data frame [2 x 4]
 Groups: &lt;by row&gt;
 
-# A tibble: 2 × 4
-   name savings chores total
+# A tibble: 2 x 4
+  name  savings chores total
   &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
-1  Jack      10      5    15
-2  Jill      15      2    17
+1 Jack      10.     5.   15.
+2 Jill      15.     2.   17.
 </code></pre>
 
 </div>
@@ -998,11 +998,11 @@ Groups: &lt;by row&gt;
 pocket_money %&gt;% mutate(total=get_sum(savings,chores)) %&gt;% print
 </code></pre>
 
-<pre><code># A tibble: 2 × 4
-   name savings chores total
+<pre><code># A tibble: 2 x 4
+  name  savings chores total
   &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
-1  Jack      10      5    32
-2  Jill      15      2    32
+1 Jack      10.     5.   32.
+2 Jill      15.     2.   32.
 </code></pre>
 
 </div>
@@ -1038,14 +1038,14 @@ greeting &lt;- tibble(
 full_join(gourmet,greeting)
 </code></pre>
 
-<pre><code># A tibble: 5 × 3
-  state    sauce      word
-  &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;
-1    GA sweetBBQ hey y&#39;all
-2    CA      hot      &#39;sup
-3    NC tangyBBQ      &lt;NA&gt;
-4    TX smokyBBQ     howdy
-5    NY     &lt;NA&gt;     hello
+<pre><code># A tibble: 5 x 3
+  state sauce    word     
+  &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;    
+1 GA    sweetBBQ hey y&#39;all
+2 CA    hot      &#39;sup     
+3 NC    tangyBBQ &lt;NA&gt;     
+4 TX    smokyBBQ howdy    
+5 NY    &lt;NA&gt;     hello    
 </code></pre>
 
 </div>
@@ -1067,12 +1067,12 @@ greeting &lt;- tibble(
 inner_join(gourmet,greeting)
 </code></pre>
 
-<pre><code># A tibble: 3 × 3
-  state    sauce      word
-  &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;
-1    GA sweetBBQ hey y&#39;all
-2    CA      hot      &#39;sup
-3    TX smokyBBQ     howdy
+<pre><code># A tibble: 3 x 3
+  state sauce    word     
+  &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;    
+1 GA    sweetBBQ hey y&#39;all
+2 CA    hot      &#39;sup     
+3 TX    smokyBBQ howdy    
 </code></pre>
 
 </div>
@@ -1090,19 +1090,19 @@ grades &lt;- tibble(
 ) %&gt;% print
 </code></pre>
 
-<pre><code># A tibble: 10 × 4
-   student_ID major   U_G score
-        &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt;
-1           1     E     G    96
-2           2     B     U    88
-3           3     E     G    86
-4           4     B     G   100
-5           5     B     U    86
-6           6     E     G    89
-7           7     B     U    82
-8           8     B     U    84
-9           9     B     U    71
-10         10     E     G    66
+<pre><code># A tibble: 10 x 4
+   student_ID major U_G   score
+   &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt; &lt;int&gt;
+ 1 1          E     G        96
+ 2 2          B     U        88
+ 3 3          E     G        86
+ 4 4          B     G       100
+ 5 5          B     U        86
+ 6 6          E     G        89
+ 7 7          B     U        82
+ 8 8          B     U        84
+ 9 9          B     U        71
+10 10         E     G        66
 </code></pre>
 
 </div>
@@ -1114,11 +1114,11 @@ grades &lt;- tibble(
 <pre><code class="r">grades %&gt;% group_by(major) %&gt;% summarize(avScore=mean(score))
 </code></pre>
 
-<pre><code># A tibble: 2 × 2
-  major  avScore
-  &lt;chr&gt;    &lt;dbl&gt;
-1     B 85.16667
-2     E 84.25000
+<pre><code># A tibble: 2 x 2
+  major avScore
+  &lt;chr&gt;   &lt;dbl&gt;
+1 B        85.2
+2 E        84.2
 </code></pre>
 
 </div>

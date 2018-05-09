@@ -6,7 +6,7 @@
 
 wrangling
 ========================================================
-author: Andrew W. Park & John M. Drake
+author: Ana I. Bento & John M. Drake
 date: 
 autosize: true
 
@@ -180,11 +180,11 @@ pocket_money <- tibble(name=c("Jack","Jill"),
 ```
 
 ```
-# A tibble: 2 × 3
-   name savings chores
+# A tibble: 2 x 3
+  name  savings chores
   <chr>   <dbl>  <dbl>
-1  Jack      10      5
-2  Jill      15      2
+1 Jack      10.     5.
+2 Jill      15.     2.
 ```
 
 Applying functions to each row
@@ -200,11 +200,11 @@ pocket_money %>% rowwise %>% mutate(total=get_sum(savings,chores)) %>% print
 Source: local data frame [2 x 4]
 Groups: <by row>
 
-# A tibble: 2 × 4
-   name savings chores total
+# A tibble: 2 x 4
+  name  savings chores total
   <chr>   <dbl>  <dbl> <dbl>
-1  Jack      10      5    15
-2  Jill      15      2    17
+1 Jack      10.     5.   15.
+2 Jill      15.     2.   17.
 ```
 
 Applying functions to each row
@@ -218,11 +218,11 @@ pocket_money %>% mutate(total=get_sum(savings,chores)) %>% print
 ```
 
 ```
-# A tibble: 2 × 4
-   name savings chores total
+# A tibble: 2 x 4
+  name  savings chores total
   <chr>   <dbl>  <dbl> <dbl>
-1  Jack      10      5    32
-2  Jill      15      2    32
+1 Jack      10.     5.   32.
+2 Jill      15.     2.   32.
 ```
 
 
@@ -257,14 +257,14 @@ full_join(gourmet,greeting)
 ```
 
 ```
-# A tibble: 5 × 3
-  state    sauce      word
-  <chr>    <chr>     <chr>
-1    GA sweetBBQ hey y'all
-2    CA      hot      'sup
-3    NC tangyBBQ      <NA>
-4    TX smokyBBQ     howdy
-5    NY     <NA>     hello
+# A tibble: 5 x 3
+  state sauce    word     
+  <chr> <chr>    <chr>    
+1 GA    sweetBBQ hey y'all
+2 CA    hot      'sup     
+3 NC    tangyBBQ <NA>     
+4 TX    smokyBBQ howdy    
+5 NY    <NA>     hello    
 ```
 
 
@@ -287,12 +287,12 @@ inner_join(gourmet,greeting)
 ```
 
 ```
-# A tibble: 3 × 3
-  state    sauce      word
-  <chr>    <chr>     <chr>
-1    GA sweetBBQ hey y'all
-2    CA      hot      'sup
-3    TX smokyBBQ     howdy
+# A tibble: 3 x 3
+  state sauce    word     
+  <chr> <chr>    <chr>    
+1 GA    sweetBBQ hey y'all
+2 CA    hot      'sup     
+3 TX    smokyBBQ howdy    
 ```
 
 Obtaining summary information
@@ -310,19 +310,19 @@ grades <- tibble(
 ```
 
 ```
-# A tibble: 10 × 4
-   student_ID major   U_G score
-        <chr> <chr> <chr> <int>
-1           1     E     G    96
-2           2     B     U    88
-3           3     E     G    86
-4           4     B     G   100
-5           5     B     U    86
-6           6     E     G    89
-7           7     B     U    82
-8           8     B     U    84
-9           9     B     U    71
-10         10     E     G    66
+# A tibble: 10 x 4
+   student_ID major U_G   score
+   <chr>      <chr> <chr> <int>
+ 1 1          E     G        96
+ 2 2          B     U        88
+ 3 3          E     G        86
+ 4 4          B     G       100
+ 5 5          B     U        86
+ 6 6          E     G        89
+ 7 7          B     U        82
+ 8 8          B     U        84
+ 9 9          B     U        71
+10 10         E     G        66
 ```
 
 Obtaining summary information
@@ -335,11 +335,11 @@ grades %>% group_by(major) %>% summarize(avScore=mean(score))
 ```
 
 ```
-# A tibble: 2 × 2
-  major  avScore
-  <chr>    <dbl>
-1     B 85.16667
-2     E 84.25000
+# A tibble: 2 x 2
+  major avScore
+  <chr>   <dbl>
+1 B        85.2
+2 E        84.2
 ```
 
 
