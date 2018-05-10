@@ -19,7 +19,7 @@ knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE)
 2. Understand there are different ways of conveying a result
 
 
-=======
+
 
 ## Introduction
 
