@@ -85,7 +85,8 @@ Piping
 ========================================================
 **A) Run several functions**
 
-```{r, eval=F}
+
+```r
 foo_foo <- hop(foo_foo, through = forest)
 foo_foo <- scoop(foo_foo, up = field_mice)
 foo_foo <- bop(foo_foo, on = head)
@@ -93,7 +94,8 @@ foo_foo <- bop(foo_foo, on = head)
 
 **B) String function calls together**
 
-```{r, eval=F}
+
+```r
 bop(
   scoop(
     hop(foo_foo, through = forest),
@@ -105,7 +107,8 @@ bop(
 
 **C) Use piping**
 
-```{r, eval=F}
+
+```r
 foo_foo %>% hop(through = forest) %>% scoop(up = field_mouse) %>% bop(on = head)
 ```
 
@@ -113,16 +116,26 @@ foo_foo %>% hop(through = forest) %>% scoop(up = field_mouse) %>% bop(on = head)
 Piping and assigning
 ========================================================
 
-```{r}
+
+```r
 x <- 2
 y <- sqrt(sin(x))
 y
 ```
 
-```{r}
+```
+[1] 0.9535709
+```
+
+
+```r
 x <- 2
 x <- sqrt(sin(x))
 x
+```
+
+```
+[1] 0.9535709
 ```
 
 
@@ -131,45 +144,85 @@ Piping and assigning
 ========================================================
 
 
-```{r}
+
+```r
 library(magrittr)
 x <- 2
 y <- x %>% sin %>% sqrt
 y
 ```
 
-```{r}
+```
+[1] 0.9535709
+```
+
+
+```r
 library(magrittr)
 x <- 2
 x %<>% sin %>% sqrt
 x
 ```
 
+```
+[1] 0.9535709
+```
+
 Applying functions to each row
 ========================================================
 
-```{r}
+
+```r
 library(tidyverse)
 library(magrittr)
 pocket_money <- tibble(name=c("Jack","Jill"),
                        savings=c(10,15),chores=c(5,2)) %>% print
 ```
 
-Applying functions to each row
-========================================================
-
-```{r}
-get_sum<-function(savings,chores){return(sum(savings,chores))}
-pocket_money %>% rowwise %>% mutate(total=get_sum(savings,chores)) %>% print
+```
+# A tibble: 2 x 3
+  name  savings chores
+  <chr>   <dbl>  <dbl>
+1 Jack     10.0   5.00
+2 Jill     15.0   2.00
 ```
 
 Applying functions to each row
 ========================================================
 
 
-```{r}
+```r
+get_sum<-function(savings,chores){return(sum(savings,chores))}
+pocket_money %>% rowwise %>% mutate(total=get_sum(savings,chores)) %>% print
+```
+
+```
+Source: local data frame [2 x 4]
+Groups: <by row>
+
+# A tibble: 2 x 4
+  name  savings chores total
+  <chr>   <dbl>  <dbl> <dbl>
+1 Jack     10.0   5.00  15.0
+2 Jill     15.0   2.00  17.0
+```
+
+Applying functions to each row
+========================================================
+
+
+
+```r
 get_sum<-function(savings,chores){return(sum(savings,chores))}
 pocket_money %>% mutate(total=get_sum(savings,chores)) %>% print
+```
+
+```
+# A tibble: 2 x 4
+  name  savings chores total
+  <chr>   <dbl>  <dbl> <dbl>
+1 Jack     10.0   5.00  32.0
+2 Jill     15.0   2.00  32.0
 ```
 
 
@@ -188,7 +241,8 @@ You can specifiy the column names to match on, otherwise R will do a _natural jo
 Combining data sets
 ========================================================
 
-```{r}
+
+```r
 gourmet <- tibble(
   state=c("GA","CA","NC","TX"),
   sauce=c("sweetBBQ","hot","tangyBBQ","smokyBBQ")
@@ -202,11 +256,23 @@ greeting <- tibble(
 full_join(gourmet,greeting)
 ```
 
+```
+# A tibble: 5 x 3
+  state sauce    word     
+  <chr> <chr>    <chr>    
+1 GA    sweetBBQ hey y'all
+2 CA    hot      'sup     
+3 NC    tangyBBQ <NA>     
+4 TX    smokyBBQ howdy    
+5 NY    <NA>     hello    
+```
+
 
 Combining data sets
 ========================================================
 
-```{r}
+
+```r
 gourmet <- tibble(
   state=c("GA","CA","NC","TX"),
   sauce=c("sweetBBQ","hot","tangyBBQ","smokyBBQ")
@@ -220,10 +286,20 @@ greeting <- tibble(
 inner_join(gourmet,greeting)
 ```
 
+```
+# A tibble: 3 x 3
+  state sauce    word     
+  <chr> <chr>    <chr>    
+1 GA    sweetBBQ hey y'all
+2 CA    hot      'sup     
+3 TX    smokyBBQ howdy    
+```
+
 Obtaining summary information
 ========================================================
 
-```{r}
+
+```r
 set.seed(123)
 grades <- tibble(
   student_ID=as.character(1:10),
@@ -233,13 +309,37 @@ grades <- tibble(
 ) %>% print
 ```
 
+```
+# A tibble: 10 x 4
+   student_ID major U_G   score
+   <chr>      <chr> <chr> <int>
+ 1 1          E     G        96
+ 2 2          B     U        88
+ 3 3          E     G        86
+ 4 4          B     G       100
+ 5 5          B     U        86
+ 6 6          E     G        89
+ 7 7          B     U        82
+ 8 8          B     U        84
+ 9 9          B     U        71
+10 10         E     G        66
+```
+
 Obtaining summary information
 ========================================================
 
 
-```{r}
-grades %>% group_by(major) %>% summarize(avScore=mean(score))
 
+```r
+grades %>% group_by(major) %>% summarize(avScore=mean(score))
+```
+
+```
+# A tibble: 2 x 2
+  major avScore
+  <chr>   <dbl>
+1 B        85.2
+2 E        84.2
 ```
 
 
