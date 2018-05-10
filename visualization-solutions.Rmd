@@ -5,8 +5,8 @@ date: ""
 output: pdf_document
 ---
 
-```{r setup, include=FALSE, warning=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE)
 ```
 
 ## Introduction
@@ -15,8 +15,29 @@ This is a (partial) key for the exercises in the handout *Visualization*
 
 **Exercise. Use our corrected infectious period variable (`infectious.period2`) to study the change in the inectious period over the course of the MERS epidemic.**
 
-```{r}
+```{r, echo=FALSE}
+mers <- read.csv('cases.csv')
+
+mers$hospitalized[890] <- c('2015-02-20')
+mers <- mers[-471,]
+
+library(lubridate)
+library(ggplot2)
+mers$onset2 <- ymd(mers$onset)
+mers$hospitalized2 <- ymd(mers$hospitalized)
+class(mers$onset2)
+day0 <- min(na.omit(mers$onset2))
+
 mers$epi.day <- as.numeric(mers$onset2 - day0)
+
+mers$infectious.period <- mers$hospitalized2-mers$onset2    # calculate "raw" infectious period
+class(mers$infectious.period)           # these data are class "difftime"
+mers$infectious.period <- as.numeric(mers$infectious.period, units = "days")
+```
+
+```{r}
+mers$infectious.period2 <- ifelse(mers$infectious.period<0,0,mers$infectious.period)
+
 ggplot(data=mers, mapping=aes(x=epi.day, y=infectious.period2)) + 
   geom_point(mapping = aes(color=country)) +
   scale_y_continuous(limits = c(0, 50)) +

@@ -14,13 +14,10 @@ knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE)
 
 ## Learning outcomes
 
-1. Add outcome
+1. Create plots with ggplot
 
-2. Add outcome
+2. Understand there are different ways of conveying a result
 
-3. Add outcome
-
-4. Add outcome
 
 =======
 
