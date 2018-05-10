@@ -1,6 +1,7 @@
 ---
-title: "Programming"
-author: "John M. Drake & Ana I. Bento"
+title: Programming^[Contributions to lectures and practicals by Andrew W. Park, John
+  M. Drake and Ana I. Bento]
+author: ''
 date: ''
 output:
   html_document: default

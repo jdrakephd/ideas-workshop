@@ -1,10 +1,11 @@
 ---
-title: "Project Management"
-author: 'Ana I. Bento & John M. Drake '
+title: Project Management^[Contributions to lectures and practicals by Andrew W. Park,
+  John M. Drake and Ana I. Bento]
+author: ''
 date: ''
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -21,7 +22,7 @@ This exercise is about practical stuff -- managing scientific projects and workf
 
 2. Version control
 
-3. Create data analysis workflow, reporting, and the writing of scientific manuscripts
+3. Create a Adata analysis workflow, reporting, and the writing of scientific manuscripts
 
 ## R Projects
 

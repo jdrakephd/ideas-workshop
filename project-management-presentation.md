@@ -1,6 +1,6 @@
 Project Management
 ========================================================
-author: Ana I. Bento  & John M. Drake 
+author: John M. Drake & Andrew Park
 date: 
 autosize: true
 
@@ -21,7 +21,7 @@ Keeping track of changes
 **Version control**
 
 - Git and Github
-- <http://github.com/anabento>
+- <http://github.com/taddallas>
 
 
 Statistically literate programming

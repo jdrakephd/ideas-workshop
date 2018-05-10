@@ -1,10 +1,10 @@
 ---
-title: "Data visualization"
-author: "John M. Drake & Ana I. Bento"
+title: Data visualization^[Contributions to lectures and practicals by Andrew W. Park, John M. Drake and Ana I. Bento]
+author: ''
 date: ''
 output:
-  html_document: default
   pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}

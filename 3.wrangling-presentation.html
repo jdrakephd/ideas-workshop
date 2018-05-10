@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Data wrangling</title>
+  <title>wrangling</title>
     
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -784,7 +784,7 @@ hljs.initHighlightingOnLoad();
   <div class="slides">
 
 <section data-state="section" data-transition="linear" data-transition-speed="default">
-<h1>Data wrangling</h1><p>Ana I. Bento &amp; John M. Drake</p>
+<h1>wrangling</h1><p>Ana I. Bento &amp; John M. Drake</p>
 
 <div class="slideContent" >
 
@@ -964,8 +964,8 @@ pocket_money &lt;- tibble(name=c(&quot;Jack&quot;,&quot;Jill&quot;),
 <pre><code># A tibble: 2 x 3
   name  savings chores
   &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt;
-1 Jack     10.0   5.00
-2 Jill     15.0   2.00
+1 Jack      10.     5.
+2 Jill      15.     2.
 </code></pre>
 
 </div>
@@ -984,8 +984,8 @@ Groups: &lt;by row&gt;
 # A tibble: 2 x 4
   name  savings chores total
   &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
-1 Jack     10.0   5.00  15.0
-2 Jill     15.0   2.00  17.0
+1 Jack      10.     5.   15.
+2 Jill      15.     2.   17.
 </code></pre>
 
 </div>
@@ -1001,8 +1001,8 @@ pocket_money %&gt;% mutate(total=get_sum(savings,chores)) %&gt;% print
 <pre><code># A tibble: 2 x 4
   name  savings chores total
   &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
-1 Jack     10.0   5.00  32.0
-2 Jill     15.0   2.00  32.0
+1 Jack      10.     5.   32.
+2 Jill      15.     2.   32.
 </code></pre>
 
 </div>
