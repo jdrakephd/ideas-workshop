@@ -1,13 +1,24 @@
 ---
 title: "Programming"
-author: "John M. Drake & Andrew W. Park"
-date: ""
-output: pdf_document
+author: "John M. Drake & Ana I. Bento"
+date: ''
+output:
+  html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE)
 ```
+
+## Learning outcomes
+
+1. Writing scripts
+
+2. Writing functions
+
+3. Writing loops
+
 
 ## Introduction
 

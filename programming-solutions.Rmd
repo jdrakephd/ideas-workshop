@@ -1,6 +1,6 @@
 ---
 title: "Programming Solutions"
-author: "John M. Drake and Andrew W. Park"
+author: "John M. Drake & Ana I. Bento"
 date: ""
 output: pdf_document
 ---

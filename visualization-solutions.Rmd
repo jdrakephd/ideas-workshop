@@ -1,11 +1,11 @@
 ---
 title: "Visualization solutions"
-author: "John M. Drake"
+author: ""
 date: ""
 output: pdf_document
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, warning=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
@@ -16,6 +16,7 @@ This is a (partial) key for the exercises in the handout *Visualization*
 **Exercise. Use our corrected infectious period variable (`infectious.period2`) to study the change in the inectious period over the course of the MERS epidemic.**
 
 ```{r}
+mers$epi.day <- as.numeric(mers$onset2 - day0)
 ggplot(data=mers, mapping=aes(x=epi.day, y=infectious.period2)) + 
   geom_point(mapping = aes(color=country)) +
   scale_y_continuous(limits = c(0, 50)) +

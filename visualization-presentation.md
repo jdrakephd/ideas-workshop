@@ -1,6 +1,6 @@
 Introduction to data visualization
 ========================================================
-author: John M. Drake & Andrew W. Park
+author: John M. Drake & Ana I. Bento
 date: 
 autosize: true
 

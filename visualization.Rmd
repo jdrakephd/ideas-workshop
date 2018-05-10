@@ -3,15 +3,15 @@ title: "Data visualization"
 author: "John M. Drake & Ana I. Bento"
 date: ''
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE)
 ```
 
-<<<<<<< HEAD
+
 ## Learning outcomes
 
 1. Add outcome
@@ -21,9 +21,8 @@ knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE)
 3. Add outcome
 
 4. Add outcome
-=======
 
->>>>>>> 8a90f556153550644d067e4ae23518f0e171c497
+=======
 
 ## Introduction
 
