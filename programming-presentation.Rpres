@@ -1,6 +1,6 @@
 Writing computer programs for data analysis
 ========================================================
-author: Ana I. Bento & John M. Drake 
+author: John M. Drake & Ana I. Bento 
 date: 
 autosize: true
 
