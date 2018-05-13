@@ -121,27 +121,6 @@ log(10, base=10)
 Key commands 4
 ========================================================
 
-**Modular arithmetic**
-
-
-```r
-119 %/% 10
-```
-
-```
-[1] 11
-```
-
-```r
-119 %% 10
-```
-
-```
-[1] 9
-```
-
-Key commands 5
-========================================================
 
 **Logic**
 
@@ -406,7 +385,7 @@ y <- matrix(x, ncol=2)
 plot(y, xlab='Variable 1', ylab='Variable 2')
 ```
 
-![plot of chunk unnamed-chunk-19](programming-presentation-figure/unnamed-chunk-19-1.png)
+![plot of chunk unnamed-chunk-18](programming-presentation-figure/unnamed-chunk-18-1.png)
 
 Pipes
 ========================================================
@@ -421,7 +400,7 @@ rnorm(100) %>%
   plot(xlab='Variable 1', ylab='Variable 2')
 ```
 
-![plot of chunk unnamed-chunk-20](programming-presentation-figure/unnamed-chunk-20-1.png)
+![plot of chunk unnamed-chunk-19](programming-presentation-figure/unnamed-chunk-19-1.png)
 
 
 Flow of control
