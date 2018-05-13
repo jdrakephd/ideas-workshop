@@ -113,9 +113,9 @@ ggplot(data=mers) +
 
 In this example, we've shown how to make a basic bar plot with `ggplot` and the geom function `geom_bar`. Our mapping of data objects to plot objects was performed using `aes` and we used the `fill` aesthetic to examing the distribution of cases among countries. There are lots of variations on the bar plot that we can examine. For instance, we can modify the `position`, which is another argument to `geom_bar`.
 
-**Exercise. Modify the epidemic curve using the argument `position=fill`. What does this plot show?**
+**Exercise. Modify the epidemic curve using the argument `position="fill"`. What does this plot show?**
 
-**Exercise. Another way to modify a bar plot is to change the coordinates. This can be done by "adding" `coord_flip()` and `coord_polar()` to the plot. Modify the epidemic curve using the argument `position=fill`. What does this plot show?**
+**Exercise. Another way to modify a bar plot is to change the coordinates. This can be done by "adding" `coord_flip()` and `coord_polar()` to the plot. What does this plot show?**
 
 ## Univariate plots
 
