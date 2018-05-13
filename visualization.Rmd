@@ -173,9 +173,9 @@ We can continue our study by focusing on the infectious period. Epidemiological 
 
 This means outbreaks can end two ways. First, the outbreak might "burn out" by infecting such a large fraction of the susceptible population that the effective reproduction number falls below one. Second, outbreaks are often curtailed before this point by isolating infected individuals, effectively by reducing the infectious period. Thus, we might be interested in understanding how the infectious period changes over time (i.e., the effectiveness of isolation).
 
-**Exercise. Use our corrected infectious period variable (`infectious.period2`) to study the change in the inectious period over the course of the MERS epidemic.**
+**Exercise. Use our corrected infectious period variable (`infectious.period2`) to study the change in the infectious period over the course of the MERS epidemic.**
 
-**Exercise. In data from many outbreaks it can be seen that there is a kind of *societal learning*. When the infection first emerges it is not quickly recognized, public health resources have not been mobilized, it is not known what symptoms are diagnostic, how to treat, etc. But, quickly, this information is collected and the utbreak is contained. Is there evidence of this kind of societal learning in the mers data. Add a curve fit using `geom_smooth` to explore this question. Hint: I solved using the `loess` method because the default smoother (gam) failed.**
+**Exercise. In data from many outbreaks it can be seen that there is a kind of *societal learning*. When the infection first emerges it is not quickly recognized, public health resources have not been mobilized, it is not known what symptoms are diagnostic, how to treat, etc. But, quickly, this information is collected and the outbreak is contained. Is there evidence of this kind of societal learning in the mers data. Add a curve fit using `geom_smooth` to explore this question. Hint: We solved using the `loess` method because the default smoother (gam) failed.**
 
 **Exercise. Plot `infectious.period2` against time, as before, but this time add a separate smooth fit for each country.**
 
