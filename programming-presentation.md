@@ -367,7 +367,7 @@ wt_mean2 <- function(x,w){
 Pipes
 ========================================================
 
-The pipe (`%>%`), f*rom the `magrittr` package, is a tool for clearly expressing a sequence of multiple operations
+The pipe (`%>%`), from the `magrittr` package, is a tool for clearly expressing a sequence of multiple operations
 
 ![alt text](logo.png)
 
