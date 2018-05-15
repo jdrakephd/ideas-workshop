@@ -59,7 +59,7 @@ The PRISM data for total rainfall and average temperature, is available for over
 
 *Task 1: Read in all three csv files as tibble data frames. For consistency with these notes, we'll assign their dataframes to be called "ld", "pop" and "prism", resectively.*
 
-```{r, message=F, echo=T,warning=FALSE}
+```{r, message=F, echo=FALSE,warning=FALSE}
 # SOLUTION
 ld<-read_csv("lyme.csv")
 pop<-read_csv("pop.csv")
@@ -103,7 +103,7 @@ pop %<>% mutate(fips=as.integer(fips))
 
 The code is now in `tidy data` format. Arguably we could remove state-wide population summaries too, but we can do that when we combine data sets (*How would you do remove state-wide summaries at this stage?*). Also we could remove the character column 'str_year' now that we've converted year to integer (*How would you do this?*), but it may be useful to retain it.
 
-### Over to you: Lyme disease data
+### Lyme disease data
 
 The CDC Lyme disease data is also not currently in `tidy data` format. 
 
@@ -111,14 +111,12 @@ The CDC Lyme disease data is also not currently in `tidy data` format.
 
 Hints: 
 
-* Draw on all your resources, especially what you've already learned and your instructors.
-
 * You are going to want a column that has the full FIPS codes for each county, as explained above. You should write a function that takes two arguments: state code and county code. The function should return a 4 or 5 digit FIPS code (integer data type). For county codes that are 1 or 2 digits, you'll need to 'pad' them with the appropriate number of zeros (this will require an if-else flow control). You can determine how long a character string is using the str_length function of the `stringr` package (e.g. str_length("disease")=`r str_length("disease")`). As you might expect, the command to paste two character strings together is `paste` (remember, you can get help with ?paste). To apply your function to every cell you can use the `rowwise` function which is part of the `dplyr` package (as used in the presentation example).
 
 * Use 'rename' to rename the columns "STNAME" and "CTYNAME" with "state" and "county", respectively (useful for a later join-operation for mapping)
 
 ```{r, echo=T,warning=FALSE}
-# SOLUTION
+
 ld %<>% gather(starts_with("Cases"),key="str_year",value="cases") 
 ld %<>% mutate(year=str_replace_all(str_year,"Cases","")) 
 ld %<>% mutate(year=as.integer(year))
@@ -152,13 +150,13 @@ Base R has a `merge` function that works well in combining data frames, and we e
 Hint: revisit the presentation on joins and perhaps even the link to superheroes, if you need more information (and ask instructors)
 
 ```{r, echo=T, message=F,warning=FALSE}
-# SOLUTION
+
 ld.prism<- inner_join(ld,prism)
 ```
 
 *Task 6: Write a line of code to additionally combine the demographic data with the Lyme disease and climate data.*
 
-```{r, echo=T, message=F}
+```{r, echo=FALSE, message=F}
 # SOLUTION
 ld.prism.pop<-inner_join(ld.prism,pop)
 ```
@@ -178,9 +176,16 @@ Hints:
 * you can include the `arrange` function at the end of your pipe to put the data in a meaningful order (e.g. `...  %>% arrange(avScore)` or `...%>% arrange(desc(avScore))`)
 
 ```{r, echo=T,warning=FALSE}
-# SOLUTION
+
 cases_by_year <- ld %>% ungroup %>% group_by(year) %>% 
   summarize(total=sum(cases)) %>% arrange(desc(total))
+
+```
+
+*Now do number (2)*
+```{r, echo=FALSE,warning=FALSE}
+# SOLUTION
+
 avCases_by_state <- ld %>% ungroup %>% group_by(state) %>% 
   summarize(avCases=mean(cases)) %>% arrange(desc(avCases))
 ```
@@ -191,7 +196,7 @@ We've come a long way since we read in the raw data on Lyme disease, demography 
 
 *Task 8: use `save` to create an Rda file of the data frame and use `write_csv` to create a csv file of the same (remember to try ?save and ?write_csv in the console if you're not sure how these functions work).*
 
-```{r, eval=T, echo=T,warning=FALSE}
+```{r, eval=FALSE, echo=FALSE,warning=FALSE}
 # SOLUTION
 write_csv(ld.prism.pop,"LdPrismPop.csv")
 save(ld.prism.pop,file="get_LdPrismPop.Rda")
