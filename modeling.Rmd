@@ -3,8 +3,8 @@ title: Data modeling in R^[Contributions to lectures and practicals by Andrew W.
   John M. Drake and Ana I. Bento]
 author: ''
 output:
-  html_document: default
   pdf_document: default
+  html_document: default
 ---
 ## Learning outcomes
 
@@ -100,6 +100,7 @@ Hint: You'll need to use the appropriate `method` which you can find in the help
 ```{r, echo=FALSE, eval=T,warning=FALSE}
 # SOLUTION
 plotSmall + geom_smooth(method="lm")
+plotSmall
 ```
 
 Further, we can store the linear model in memory and get a summary.
