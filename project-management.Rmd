@@ -91,7 +91,7 @@ In closing, we note that we have only scratched the surface of what can be done 
 
 **Exercise. Visit the [R Markdown website](http://rmarkdown.rstudio.com/) and look around. Especially, read through the [Authoring Basics]( http://rmarkdown.rstudio.com/authoring_basics.html).**
 
-**Exercise. Borrowing from your earlier exercises, prepare an analysis of the WNV or MERS data as a reproducible document using R/Markdown. Compile to a pdf.**
+**Exercise. Borrowing from your earlier exercises, prepare an analysis of the WNV or MERS data as a reproducible document using R/Markdown. Compile to a pdf (if your desktop in class is not compiling in PDF compile in HTML.**
 
 **Exercise. Add an interactive plotly graph to your reproducible document. Compile to HTML.**
 
