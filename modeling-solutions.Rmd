@@ -39,6 +39,10 @@ We're going to work with the Lyme disease/Climate/Demography data set that you p
 *Task 1: Using either `read_csv` (note: the underscore version, not `read.csv`) or `load`, import the data set you put together in the module on 'Data wrangling in R'.*
 
 ```{r, echo=FALSE,warning=FALSE}
+# SOLUTION
+load("get_LdPrismPop.Rda")
+#or
+# read_csv("LdPrismPop.csv")
 
 ```
 
@@ -52,7 +56,8 @@ One way to do this is all in one go is with the function `ggpairs`, part of the 
 
 
 ```{r, echo=T, eval=T, warning=FALSE}
-
+# SOLUTION
+ggpairs(ld.prism.pop,columns=c("prcp","avtemp","size","cases"))
 ```
 
 You'll note from the density plots on the diagonals, that the data columns 'size' and 'cases' are very clumped, with many low values and a few large values. These may be easier to visualize by transforming to a logarithmic scale. 
@@ -60,6 +65,10 @@ You'll note from the density plots on the diagonals, that the data columns 'size
 *Task 3: Create two new columns for log10(size) and log10(cases+1) and substitute these for the original size and cases supplied when you recreate the ggpairs plot. Why do we add 1 to the number of cases?*
 
 ```{r, echo=FALSE, warning=FALSE}
+# SOLUTION
+ld.prism.pop %<>% mutate(log10size=log10(size))
+ld.prism.pop %<>% mutate(log10cases=log10(cases+1))
+ggpairs(ld.prism.pop,columns=c("prcp","avtemp","log10size","log10cases"))
 
 ```
 
@@ -77,7 +86,11 @@ Hints:
 * Name your ggplot (`myPlot <- ggplot...`) then call it (plot it) on a separate line (this will make it easy to add a subsequent layer to the plot)
 
 ```{r, echo=FALSE, warning=FALSE}
-
+# SOLUTION
+set.seed(222)
+smallData <- ld.prism.pop %>% sample_n(100)
+plotSmall <- ggplot(smallData,aes(x=prcp,y=avtemp))+geom_point() 
+plotSmall
 ```
 
 *Task 5: Add the best straight line to the plot using `geom_smooth`.*
@@ -85,7 +98,9 @@ Hints:
 Hint: You'll need to use the appropriate `method` which you can find in the help file (`?geom_smooth`)
 
 ```{r, echo=FALSE, eval=T,warning=FALSE}
-
+# SOLUTION
+plotSmall + geom_smooth(method="lm")
+plotSmall
 ```
 
 Further, we can store the linear model in memory and get a summary.
@@ -93,7 +108,9 @@ Further, we can store the linear model in memory and get a summary.
 *Task 6: Create a linear model (lm) object with a call like `myModel <- lm(y ~ x, data = myData)` for the subsetted data, where y=avtemp and x=prcp. In addition, view the summary with a call along the lines of `summary(myModel)`*
 
 ```{r, echo=FALSE,warning=FALSE}
-
+# SOLUTION
+lm_prcp_avtemp <- lm(avtemp ~ prcp, data = smallData)
+summary(lm_prcp_avtemp)
 ```
 
 We can extract information from this model object. For example, if your model object was actually called `myModel` (maybe not the best name; what happens if you have another model?) we can access the slope with `summary(myModel)$coefficients[2,1]` and the associated p-value with `summary(myModel)$coefficients[2,4]`
@@ -101,7 +118,8 @@ We can extract information from this model object. For example, if your model ob
 *Task 7: What is the slope of the line you plotted in Task 5, and is the slope significantly different from 0 (p<0.05)?*
 
 ```{r, echo=FALSE, eval=T,warning=FALSE}
-
+# SOLUTION
+summary(lm_prcp_avtemp)$coefficients[2,c(1,4)]
 ```
 
 
@@ -116,7 +134,9 @@ We'll start with an illustrative exercise. We know the size of the US population
 Hint: you should pass the main (large) data frame to a `group_by` call and then a `summarize` call, then you can pass this new, unnamed data frame to ggplot using `ggplot(.)` and specify the aesthetics in a `geom_point` call. 
 
 ```{r, echo=T, eval=T,warning=FALSE}
-
+# SOLUTION
+ld.prism.pop %>% group_by(year) %>% summarize(total=sum(size)) %>% 
+  ggplot(.)+geom_point(aes(x=year,y=total))
 ```
 
 While there is no doubt that the population has been growing in recent years, it's not clear if all states are contributing equally to this growth. Manipulating data to explore this has the potential to get quite cumbersome, but the `modelr` tools are designed to make this kind of task fairly painless. 
@@ -128,13 +148,17 @@ We're going to create a nested data frame, which we do by first creating a group
 *Task 9: Create a data frame called "by_state" from the main data frame, that groups by state, and inspect it.*
 
 ```{r, echo=FALSE, eval=T,warning=FALSE}
-
+# SOLUTION
+by_state <- ld.prism.pop %>% group_by(state)
+by_state
 ```
 
 *Task 10: Next, update this new data frame so that it is nested (simply pass it to `nest`). Again, inspect the data frame by typing its name in the console so see how things changed.*
 
 ```{r, echo=T,warning=FALSE}
-
+# SOLUTION
+by_state %<>% nest
+by_state
 ```
 
 You should see that by_state has a list-column called "data". List elements are accessed with [[]]. For example to see the data for Georgia, the 10th state in the alphabetized data frame, we would type `by_state$data[[10]]` in the console.
@@ -142,7 +166,8 @@ You should see that by_state has a list-column called "data". List elements are 
 *Task 11: Display the Georgia data in the console window.*
 
 ```{r, echo=FALSE, eval=T,warning=FALSE}
-
+#SOLUTION
+by_state$data[[10]]
 ```
 
 Hopefully you noticed that this particular element of the data frame is itself a dataframe! The containing column, which contains several such data frames differing in length due to the number of counties per state, is most usefully organized as a list - hence the column-list format. This method of organizing data comes in very useful for exploratory modeling, as we'll see. First we're going to create another function.
@@ -150,7 +175,10 @@ Hopefully you noticed that this particular element of the data frame is itself a
 *Task 12: Write a function that takes a data frame as its argument and returns a linear model object that predicts size by year.*
 
 ```{r, echo=T,warning=FALSE}
-
+# SOLUTION
+linGrowth_model <- function(df){
+  lm(size ~ year, data = df)
+}
 ```
 
 
@@ -173,7 +201,8 @@ For data science good practice, it makes sense to put the model object fitted fo
 *Task 13: Add a column to the `by_state` dataframe, where each row (state) has its own model object.*
 
 ```{r, echo=T,warning=FALSE}
-
+# SOLUTION
+by_state %<>% mutate(model = map(data, linGrowth_model))
 ```
 
 Continuing in this format, we can, for example, store the residuals for each model (the discrepancy between the model prediction and the actual data). For this we will use the associated function to `purrr:map`, called `map2`, which takes 2 arguments and creates new data from them (in this case residuals).
@@ -189,7 +218,11 @@ by_state %<>% mutate(resids = map2(data, model, add_residuals))
 *Task 15: Write a function that accepts an object of the type in the resids list, and returns a sum of the absolute values, i.e. ignoring sign: abs(3)+abs(-2)=5. Use the function to add a column called `totalResid` to `by_state` that provides the total size of residuals summed over counties and years.*
 
 ```{r, echo=T,warning=FALSE}
-
+# SOLUTION
+sum_resids <- function(x){
+  sum(abs(x$resid))
+}
+by_state %<>% mutate(totalResid = map(resids,sum_resids))
 ```
 
 
@@ -198,7 +231,11 @@ In addition, we can obtain and visualize the slope of population growth by state
 *Task 16: Write a function that accepts a linear model and returns the slope (model `M` has slope `M$coefficients[2]`) and then use this function to create a new column called `slope` in the `by_state` data frame, that is the slope for each state.* 
 
 ```{r, echo=T,warning=FALSE}
-
+# SOLUTION
+get_slope <- function(model){
+  model$coefficients[2]
+}
+by_state %<>% mutate(slope = purrr::map(model, get_slope))
 ```
 
 While we're doing a great job of keeping our data organized, we've created another list-column (`slope` in data frame `by_state`). For visualization, we're going to want to un-nest these data structures...
@@ -217,13 +254,17 @@ Now we can pass these new data frames to ggplot to see how the growth rate manif
 Hint: If the states (x-axis) are hard to read, we can rotate them to be vertical by adding ` + theme(axis.text.x = element_text(angle = 90, hjust = 1))` to the ggplot layers.
 
 ```{r, echo=T, eval=T,warning=FALSE}
-
+# SOLUTION
+slopes %>% ggplot(aes(state,slope))+geom_point()+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
 
 *Task 18:  Plot the total resisduals for all states.*
 
 ```{r, echo=FALSE, eval=T,warning=FALSE}
-
+# SOLUTION
+totalResids %>% ggplot(aes(state,totalResid))+geom_point()+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
 
 This manipulation helps us to determine, which states are growing quickly, and which state's growth is relatively reasonably described by a linear model. 
@@ -232,7 +273,8 @@ This manipulation helps us to determine, which states are growing quickly, and w
 *Task 19: Repeat Tasks 9 and 10 using a different data frame name, `by_state2`.*
 
 ```{r, echo=FALSE,warning=FALSE}
-
+#SOLUTION
+by_state2 <- ld.prism.pop %>% group_by(state) %>% nest
 ```
 
 
@@ -247,6 +289,18 @@ Hints:
 * Wrap the entire thing in "supressWarnings()" to prevent R repeatedly warning you about computing p-values with ties (which is not a big deal)
 
 ```{r, echo=T, eval=T,warning=FALSE}
+# SOLUTION
+runCor <- function(df){
+  suppressWarnings(cor.test(df$cases,df$prcp,method="spearman")$estimate)
+}
+
+by_state2 %<>% mutate(spCor = purrr::map(data, runCor))
+
+spCors <- unnest(by_state2,spCor)
+spCors %<>% arrange(desc(spCor))
+spCors$state <- factor(spCors$state, levels=unique(spCors$state))
+ggplot(spCors,aes(state,spCor))+geom_point()+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
 
 ```
 
