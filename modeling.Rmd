@@ -194,7 +194,7 @@ Depending on what other libraries are loaded, we sometimes have be careful that 
 
 If you know this to be the case (e.g. the library called `maps` has a function called `map`), you can unload it, if it's currently loaded: `detach("package:maps", unload=TRUE)`. Alternatively, you can clarify a function call by preceding it with the package name, followed by two colons. For example `maps::map` or `purrr::map`. 
 
-### Back to `purrr:map`
+### Back to `purrr::map`
 
 For data science good practice, it makes sense to put the model object fitted for each state with the appropriate state in the original data frame - not in a new data frame, like we just saw, as that requires extra coordination and possible mistakes. 
 
