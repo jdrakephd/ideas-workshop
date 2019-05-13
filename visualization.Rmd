@@ -42,7 +42,7 @@ To load the MERS data into an R session, do the following:
 2. Download the file `cases.csv` and move it to `mers`
 3. Open a session of R Studio
 4. Set the working directory by typing `setwd('~/./mers)` where `.` is the file path to your working directory. (Alternatively, you can navigate by using the `Session` drop down menu and selecting `Set Working Directory`.)
-5. Create an R *dataframe* by typing `data <- read.csv('cases.csv')` as shown below.
+5. Create an R *dataframe* by typing `mers <- read.csv('cases.csv')` as shown below.
 
 ```{r load-data}
 mers <- read.csv('cases.csv')
@@ -140,7 +140,8 @@ mers$infectious.period2 <- ifelse(mers$infectious.period<0,0,mers$infectious.per
 ggplot(data=mers) +
   geom_histogram(aes(x=infectious.period2)) + 
   labs(x='Infectious period', y='Frequency',
-       title='Distribution of calculated MERS infectious period (positive values only)', caption="Data from: https://github.com/rambaut/MERS-Cases/blob/gh-pages/data/cases.csv")
+       title='Distribution of calculated MERS infectious period (positive values only)',
+       caption="Data from: https://github.com/rambaut/MERS-Cases/blob/gh-pages/data/cases.csv")
 ```
 
 **Exercise. Investigate the frequency of hospital-acquired infections of MERS**
@@ -151,7 +152,8 @@ There are lots of different plot types that one can use to inspect continuously 
 ggplot(data=mers) + 
   geom_density(mapping=aes(x=infectious.period2)) + 
   labs(x='Infectious period', y='Frequency',
-       title='Probability density for MERS infectious period (positive values only)', caption="Data from: https://github.com/rambaut/MERS-Cases/blob/gh-pages/data/cases.csv")
+       title='Probability density for MERS infectious period (positive values only)',
+       caption="Data from: https://github.com/rambaut/MERS-Cases/blob/gh-pages/data/cases.csv")
 ```
 
 Or the area plot
@@ -160,7 +162,8 @@ Or the area plot
 ggplot(data=mers) + 
   geom_area(stat='bin', mapping=aes(x=infectious.period2)) +
   labs(x='Infectious period', y='Frequency',
-       title='Area plot for MERS infectious period (positive values only)', caption="Data from: https://github.com/rambaut/MERS-Cases/blob/gh-pages/data/cases.csv")
+       title='Area plot for MERS infectious period (positive values only)', 
+       caption="Data from: https://github.com/rambaut/MERS-Cases/blob/gh-pages/data/cases.csv")
 ```
 
 **Exercise. Use the infectious period data calculated in `mers$infectious.period2` to experiment with other univariate plot types like `geom_dotplot` and `geom_bar`.**
@@ -189,7 +192,8 @@ ggplot(data=mers, mapping=aes(x=epi.day, y=infectious.period2)) +
   facet_wrap(~ country) + 
   scale_y_continuous(limits = c(0, 50)) +
    labs(x='Epidemic day', y='Infectious period',
-       title='MERS infectious period (positive values only) over time', caption="Data from: https://github.com/rambaut/MERS-Cases/blob/gh-pages/data/cases.csv")
+       title='MERS infectious period (positive values only) over time',
+       caption="Data from: https://github.com/rambaut/MERS-Cases/blob/gh-pages/data/cases.csv")
 ```
 
 ```{r}
@@ -198,7 +202,8 @@ ggplot(data=subset(mers, gender %in% c('M', 'F') & country %in% c('KSA', 'Oman',
   facet_grid(gender ~ country) + 
   scale_y_continuous(limits = c(0, 50)) +
    labs(x='Epidemic day', y='Infectious period',
-       title='MERS infectious period by gender and country', caption="Data from: https://github.com/rambaut/MERS-Cases/blob/gh-pages/data/cases.csv")
+       title='MERS infectious period by gender and country',
+       caption="Data from: https://github.com/rambaut/MERS-Cases/blob/gh-pages/data/cases.csv")
 ```
 
 **Exercise. Study variation in the *case fatality rate* (the fraction of cases that end in death) over time and across countries.**
