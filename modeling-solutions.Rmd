@@ -22,6 +22,10 @@ This exercise explores methods for using modeling to shape our inquiry of data. 
 
 *The term "modeling" covers a vast array of ideas and techniques. A single module is always going to be rather modest in scope. Here we are going to focus more on statistical modeling than on mechanistic modeling (e.g. linear model fitting, not SIR modeling). However, even here we have to limit the scope. We're not really going to learn how to do statistical modeling (except very briefly). Rather, we're going to learn good practices for having our tidy data integrate with statistical modeling to help us perform exploratory analysis (hypothesis generation, not hypothesis confirmation).*
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE, cache=TRUE)
+```
+
 
 ```{r, message=F, warning=FALSE}
 library(tidyverse)
