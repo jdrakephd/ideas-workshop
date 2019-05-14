@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>wrangling</title>
+  <title>Wrangling</title>
     
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -784,7 +784,7 @@ hljs.initHighlightingOnLoad();
   <div class="slides">
 
 <section data-state="section" data-transition="linear" data-transition-speed="default">
-<h1>wrangling</h1><p>Andrew W. Park &amp; John M. Drake</p>
+<h1>Wrangling</h1><p>Andrew W. Park &amp; John M. Drake</p>
 
 <div class="slideContent" >
 
@@ -955,7 +955,170 @@ x
 <section data-transition="linear" data-transition-speed="default">
 <h3>Applying functions to each row</h3>
 <div class="slideContent" >
-<pre><code>Error in library(tidyverse) : there is no package called &#39;tidyverse&#39;
+<pre><code class="r">library(tidyverse)
+library(magrittr)
+pocket_money &lt;- tibble(name=c(&quot;Jack&quot;,&quot;Jill&quot;),
+                       savings=c(10,15),chores=c(5,2)) %&gt;% print
+</code></pre>
+
+<pre><code># A tibble: 2 x 3
+  name  savings chores
+  &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt;
+1 Jack       10      5
+2 Jill       15      2
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Applying functions to each row</h3>
+<div class="slideContent" >
+<pre><code class="r">get_sum&lt;-function(savings,chores){return(sum(savings,chores))}
+pocket_money %&gt;% rowwise %&gt;% mutate(total=get_sum(savings,chores)) %&gt;% print
+</code></pre>
+
+<pre><code>Source: local data frame [2 x 4]
+Groups: &lt;by row&gt;
+
+# A tibble: 2 x 4
+  name  savings chores total
+  &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+1 Jack       10      5    15
+2 Jill       15      2    17
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Applying functions to each row</h3>
+<div class="slideContent" >
+<pre><code class="r">get_sum&lt;-function(savings,chores){return(sum(savings,chores))}
+pocket_money %&gt;% mutate(total=get_sum(savings,chores)) %&gt;% print
+</code></pre>
+
+<pre><code># A tibble: 2 x 4
+  name  savings chores total
+  &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+1 Jack       10      5    32
+2 Jill       15      2    32
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Combining data sets</h3>
+<div class="slideContent" >
+<p>In base R, data frames are combined using the <code>merge</code> function</p>
+
+<p>Using the <code>dplyr</code> package, tibbles are combined using <code>join</code> functions (<a href="https://cran.r-project.org/web/packages/dplyr/vignettes/two-table.html">https://cran.r-project.org/web/packages/dplyr/vignettes/two-table.html</a>)</p>
+
+<p>The different types of <code>join</code> are best explored by example, like with these superheros -&gt; <a href="http://stat545.com/bit001_dplyr-cheatsheet.html">http://stat545.com/bit001_dplyr-cheatsheet.html</a></p>
+
+<p>You can specifiy the column names to match on, otherwise R will do a <em>natural join</em> using all variables in common</p>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Combining data sets</h3>
+<div class="slideContent" >
+<pre><code class="r">gourmet &lt;- tibble(
+  state=c(&quot;GA&quot;,&quot;CA&quot;,&quot;NC&quot;,&quot;TX&quot;),
+  sauce=c(&quot;sweetBBQ&quot;,&quot;hot&quot;,&quot;tangyBBQ&quot;,&quot;smokyBBQ&quot;)
+)
+
+greeting &lt;- tibble(
+  state=c(&quot;TX&quot;,&quot;GA&quot;,&quot;CA&quot;,&quot;NY&quot;),
+  word=c(&quot;howdy&quot;,&quot;hey y&#39;all&quot;,&quot;&#39;sup&quot;,&quot;hello&quot;)
+)
+
+full_join(gourmet,greeting)
+</code></pre>
+
+<pre><code># A tibble: 5 x 3
+  state sauce    word     
+  &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;    
+1 GA    sweetBBQ hey y&#39;all
+2 CA    hot      &#39;sup     
+3 NC    tangyBBQ &lt;NA&gt;     
+4 TX    smokyBBQ howdy    
+5 NY    &lt;NA&gt;     hello    
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Combining data sets</h3>
+<div class="slideContent" >
+<pre><code class="r">gourmet &lt;- tibble(
+  state=c(&quot;GA&quot;,&quot;CA&quot;,&quot;NC&quot;,&quot;TX&quot;),
+  sauce=c(&quot;sweetBBQ&quot;,&quot;hot&quot;,&quot;tangyBBQ&quot;,&quot;smokyBBQ&quot;)
+)
+
+greeting &lt;- tibble(
+  state=c(&quot;TX&quot;,&quot;GA&quot;,&quot;CA&quot;,&quot;NY&quot;),
+  word=c(&quot;howdy&quot;,&quot;hey y&#39;all&quot;,&quot;&#39;sup&quot;,&quot;hello&quot;)
+)
+
+inner_join(gourmet,greeting)
+</code></pre>
+
+<pre><code># A tibble: 3 x 3
+  state sauce    word     
+  &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;    
+1 GA    sweetBBQ hey y&#39;all
+2 CA    hot      &#39;sup     
+3 TX    smokyBBQ howdy    
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Obtaining summary information</h3>
+<div class="slideContent" >
+<pre><code class="r">set.seed(123)
+grades &lt;- tibble(
+  student_ID=as.character(1:10),
+  major=sample(c(&quot;E&quot;,&quot;B&quot;),10,replace=T),
+  U_G=sample(c(&quot;U&quot;,&quot;G&quot;),10,replace=T),
+  score=sample(60:100,10,replace=T)
+) %&gt;% print
+</code></pre>
+
+<pre><code># A tibble: 10 x 4
+   student_ID major U_G   score
+   &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt; &lt;int&gt;
+ 1 1          E     G        96
+ 2 2          B     U        88
+ 3 3          E     G        86
+ 4 4          B     G       100
+ 5 5          B     U        86
+ 6 6          E     G        89
+ 7 7          B     U        82
+ 8 8          B     U        84
+ 9 9          B     U        71
+10 10         E     G        66
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Obtaining summary information</h3>
+<div class="slideContent" >
+<pre><code class="r">grades %&gt;% group_by(major) %&gt;% summarize(avScore=mean(score))
+</code></pre>
+
+<pre><code># A tibble: 2 x 2
+  major avScore
+  &lt;chr&gt;   &lt;dbl&gt;
+1 B        85.2
+2 E        84.2
 </code></pre>
 
 </div>
