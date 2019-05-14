@@ -60,7 +60,10 @@ The PRISM data for total rainfall and average temperature, is available for over
 *Task 1: Read in all three csv files as tibble data frames. For consistency with these notes, we'll assign their dataframes to be called "ld", "pop" and "prism", resectively.*
 
 ```{r, message=F, echo=FALSE,warning=FALSE}
-
+# SOLUTION
+ld<-read_csv("lyme.csv")
+pop<-read_csv("pop.csv")
+prism<-read_csv("climate.csv")
 ```
 
 ## Converting data to the `tidy data` format
@@ -112,7 +115,28 @@ Hints:
 
 * Use 'rename' to rename the columns "STNAME" and "CTYNAME" with "state" and "county", respectively (useful for a later join-operation for mapping)
 
-```{r, echo=T,warning=FALSE}
+```{r, echo=F,warning=FALSE}
+#SOLUTION
+ld %<>% gather(starts_with("Cases"),key="str_year",value="cases") 
+ld %<>% mutate(year=str_replace_all(str_year,"Cases","")) 
+ld %<>% mutate(year=as.integer(year))
+ld %<>% rename(state=STNAME,county=CTYNAME)
+
+fips.builder<-function(st,ct){
+  if (str_length(ct)==3){
+    fips<-paste(as.character(st),as.character(ct),sep="") %>% as.integer
+  }
+  else if (str_length(ct)==2){
+    fips<-paste(as.character(st),"0",as.character(ct),sep="") %>% as.integer
+  }
+  else {
+    fips<-paste(as.character(st),"00",as.character(ct),sep="") %>% as.integer
+  }
+  return(fips)
+}
+
+ld %<>% rowwise() %>% mutate(fips=fips.builder(STCODE,CTYCODE)) # takes about 10 seconds
+ld %<>% select(-c(STCODE,CTYCODE,str_year))
 
 ```
 
@@ -124,14 +148,16 @@ Base R has a `merge` function that works well in combining data frames, and we e
 
 Hint: revisit the presentation on joins and perhaps even the link to superheroes, if you need more information (and ask instructors)
 
-```{r, echo=T, message=F,warning=FALSE}
-
+```{r, echo=F, message=F,warning=FALSE}
+# SOLUTION
+ld.prism<- inner_join(ld,prism)
 ```
 
 *Task 6: Write a line of code to additionally combine the demographic data with the Lyme disease and climate data.*
 
 ```{r, echo=FALSE, message=F}
-
+# SOLUTION
+ld.prism.pop<-inner_join(ld.prism,pop)
 ```
 
 ## Obtaining summary information
@@ -148,13 +174,19 @@ Hints:
 * when you use `summarize` you can define the new column name (recall 'grades' example of 'avScore') - otherwise R will give it a default name
 * you can include the `arrange` function at the end of your pipe to put the data in a meaningful order (e.g. `...  %>% arrange(avScore)` or `...%>% arrange(desc(avScore))`)
 
-```{r, echo=T,warning=FALSE}
+```{r, echo=F,warning=FALSE}
+# SOLUTION
+cases_by_year <- ld %>% ungroup %>% group_by(year) %>% 
+  summarize(total=sum(cases)) %>% arrange(desc(total))
 
 ```
 
 *Now do number (2)*
 ```{r, echo=FALSE,warning=FALSE}
+# SOLUTION
 
+avCases_by_state <- ld %>% ungroup %>% group_by(state) %>% 
+  summarize(avCases=mean(cases)) %>% arrange(desc(avCases))
 ```
 
 ## Saving data frames as objects and files
@@ -164,7 +196,9 @@ We've come a long way since we read in the raw data on Lyme disease, demography 
 *Task 8: use `save` to create an Rda file of the data frame and use `write_csv` to create a csv file of the same (remember to try ?save and ?write_csv in the console if you're not sure how these functions work).*
 
 ```{r, eval=FALSE, echo=FALSE,warning=FALSE}
-
+# SOLUTION
+write_csv(ld.prism.pop,"LdPrismPop.csv")
+save(ld.prism.pop,file="get_LdPrismPop.Rda")
 ```
 
 ## Using FIPS and built-in mapping tools to visualize geographic data
@@ -176,28 +210,19 @@ ggplot has US mapping objects that we can take advantage of.
 *Task 9: Add annotations to the following lines of code with comment lines to explain what they are achieving. Note: in the code line with "group_by(ld.prism.pop)" you need to replace the data frame in parentheses with the name of your data frame in which you combined Lyme disease, climate and demography data (Task 6)*
 
 ```{r, eval=T, message=F,warning=FALSE}
-#get map data for US counties and states
 county_map <- map_data("county")
 state_map <- map_data("state")
-
-## prepare data for plot. first group biological data by fips
 ag.fips <- group_by(ld.prism.pop,fips) 
-## add all the cases that occur in a county over time
 ld.16y<-summarize(ag.fips,all.cases=sum(cases))
-## add in the state and county names to each fips to match to geographical data
 ld.16y<-left_join(select(ld.prism.pop,c(state,county,fips)),ld.16y)
 ld.16y<-distinct(ld.16y)
-# rename state and county headers, and manipulate entries to match to geographical data
 ld.16y %<>% rename(region=state,subregion=county)
 ld.16y$subregion<-str_replace_all(ld.16y$subregion," County","")
 ld.16y$region<-tolower(ld.16y$region)
 ld.16y$subregion<-tolower(ld.16y$subregion)
 ld.16y$subregion<-str_replace_all(ld.16y$subregion," parish","")
-# add column where cases are expressed as log10
 ld.16y %<>% mutate(log10cases=log10(1+all.cases))
-# combine geographical and lyme data
 map.ld.16y<-left_join(county_map,ld.16y)
-# plot (note a handful of counties don't match - this is usually due to spelling differences such as st. james and saint james)
 ggplot(map.ld.16y)+geom_polygon(aes(long,lat,group=group,fill=log10cases),color="gray",lwd=0.2) + 
   scale_fill_gradientn(colours=rev(heat.colors(10)))
 ```
